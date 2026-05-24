@@ -1,0 +1,73 @@
+<HRDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="hr_employees.xsd">
+
+    <Regions>
+        <Region>
+            <RegionID>1</RegionID>
+            <RegionName>North America</RegionName>
+        </Region>
+    </Regions>
+
+    <Countries>
+        <Country>
+            <CountryID>US</CountryID>
+            <CountryName>United States</CountryName>
+            <RegionID>1</RegionID>
+        </Country>
+    </Countries>
+
+    <Locations>
+        <Location>
+            <LocationID>1000</LocationID>
+            <StreetAddress>2004 Charade Rd</StreetAddress>
+            <PostalCode>98199</PostalCode>
+            <City>Seattle</City>
+            <StateProvince>Washington</StateProvince>
+            <CountryID>US</CountryID>
+        </Location>
+    </Locations>
+
+    <Jobs>
+        <Job>
+            <JobID>AD_PRES</JobID>
+            <JobTitle>President</JobTitle>
+            <MinSalary>20000.00</MinSalary>
+            <MaxSalary>40000.00</MaxSalary>
+        </Job>
+    </Jobs>
+
+    <Departments>
+        <Department>
+            <DepartmentID>90</DepartmentID>
+            <DepartmentName>Executive</DepartmentName>
+            <ManagerID>100</ManagerID>
+            <LocationID>1000</LocationID>
+        </Department>
+    </Departments>
+
+    <Employees>
+        <Employee>
+            <EmployeeID>100</EmployeeID>
+            <FirstName>Steven</FirstName>
+            <LastName>King</LastName>
+            <Email>steven.king@empresa.com</Email>
+            <PhoneNumber>5151234567</PhoneNumber>
+            <HireDate>2003-06-17</HireDate>
+            <Salary>24000.00</Salary>
+            <CommissionPct>0.20</CommissionPct>
+            <JobID>AD_PRES</JobID>
+            <DepartmentID>90</DepartmentID>
+        </Employee>
+    </Employees>
+
+    <JobHistory>
+        <JobHistoryRecord>
+            <EmployeeID>100</EmployeeID>
+            <StartDate>2003-06-17</StartDate>
+            <EndDate xsi:nil="true"/>
+            <JobID>AD_PRES</JobID>
+            <DepartmentID>90</DepartmentID>
+        </JobHistoryRecord>
+    </JobHistory>
+
+</HRDatabase>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Elemento raíz: HRDatabase con estructura completa de HR -->
+  <xs:element name="HRDatabase" type="HRDatabaseType"/>
+
+  <xs:complexType name="HRDatabaseType">
+    <xs:sequence>
+      <xs:element name="Regions" type="RegionsType" minOccurs="1"/>
+      <xs:element name="Countries" type="CountriesType" minOccurs="1"/>
+      <xs:element name="Locations" type="LocationsType" minOccurs="1"/>
+      <xs:element name="Jobs" type="JobsType" minOccurs="1"/>
+      <xs:element name="Departments" type="DepartmentsType" minOccurs="1"/>
+      <xs:element name="Employees" type="EmployeesType" minOccurs="1"/>
+      <xs:element name="JobHistory" type="JobHistoryType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================== REGIONS ==================== -->
+  <xs:complexType name="RegionsType">
+    <xs:sequence>
+      <xs:element name="Region" type="RegionType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RegionType">
+    <xs:sequence>
+      <xs:element name="RegionID" type="xs:positiveInteger"/>
+      <xs:element name="RegionName" type="NonEmptyString"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================== COUNTRIES ==================== -->
+  <xs:complexType name="CountriesType">
+    <xs:sequence>
+      <xs:element name="Country" type="CountryType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CountryType">
+    <xs:sequence>
+      <xs:element name="CountryID" type="CountryIDType"/>
+      <xs:element name="CountryName" type="NonEmptyString"/>
+      <xs:element name="RegionID" type="xs:positiveInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================== LOCATIONS ==================== -->
+  <xs:complexType name="LocationsType">
+    <xs:sequence>
+      <xs:element name="Location" type="LocationType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LocationType">
+    <xs:sequence>
+      <xs:element name="LocationID" type="xs:positiveInteger"/>
+      <xs:element name="StreetAddress" type="NonEmptyString"/>
+      <xs:element name="PostalCode" type="NonEmptyString"/>
+      <xs:element name="City" type="NonEmptyString"/>
+      <xs:element name="StateProvince" type="NonEmptyString" minOccurs="0"/>
+      <xs:element name="CountryID" type="CountryIDType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================== JOBS ==================== -->
+  <xs:complexType name="JobsType">
+    <xs:sequence>
+      <xs:element name="Job" type="JobType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="JobType">
+    <xs:sequence>
+      <xs:element name="JobID" type="JobIDType"/>
+      <xs:element name="JobTitle" type="NonEmptyString"/>
+      <xs:element name="MinSalary" type="SalaryType"/>
+      <xs:element name="MaxSalary" type="SalaryType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================== DEPARTMENTS ==================== -->
+  <xs:complexType name="DepartmentsType">
+    <xs:sequence>
+      <xs:element name="Department" type="DepartmentType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DepartmentType">
+    <xs:sequence>
+      <xs:element name="DepartmentID" type="xs:positiveInteger"/>
+      <xs:element name="DepartmentName" type="NonEmptyString"/>
+      <xs:element name="ManagerID" type="xs:nonNegativeInteger" minOccurs="0"/>
+      <xs:element name="LocationID" type="xs:positiveInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================== EMPLOYEES ==================== -->
+  <xs:complexType name="EmployeesType">
+    <xs:sequence>
+      <xs:element name="Employee" type="EmployeeType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EmployeeType">
+    <xs:sequence>
+      <xs:element name="EmployeeID" type="xs:positiveInteger"/>
+      <xs:element name="FirstName" type="NonEmptyString"/>
+      <xs:element name="LastName" type="NonEmptyString"/>
+      <xs:element name="Email" type="EmailType"/>
+      <xs:element name="PhoneNumber" type="PhoneType"/>
+      <xs:element name="HireDate" type="xs:date"/>
+      <xs:element name="Salary" type="SalaryType"/>
+      <xs:element name="CommissionPct" type="CommissionType" minOccurs="0"/>
+      <xs:element name="ManagerID" type="xs:nonNegativeInteger" minOccurs="0"/>
+      <xs:element name="JobID" type="JobIDType"/>
+      <xs:element name="DepartmentID" type="xs:positiveInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================== JOB HISTORY ==================== -->
+  <xs:complexType name="JobHistoryType">
+    <xs:sequence>
+      <xs:element name="JobHistoryRecord" type="JobHistoryRecordType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="JobHistoryRecordType">
+    <xs:sequence>
+      <xs:element name="EmployeeID" type="xs:positiveInteger"/>
+      <xs:element name="StartDate" type="xs:date"/>
+      <xs:element name="EndDate" type="xs:date" minOccurs="0" nillable="true"/>
+      <xs:element name="JobID" type="JobIDType"/>
+      <xs:element name="DepartmentID" type="xs:positiveInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ==================== TIPOS SIMPLES PERSONALIZADOS ==================== -->
+  
+  <!-- Strings no vacíos -->
+  <xs:simpleType name="NonEmptyString">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:pattern value="\S.*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Email válido -->
+  <xs:simpleType name="EmailType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Teléfono (permite varios formatos) -->
+  <xs:simpleType name="PhoneType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\d\s\-\+\(\)\.]{7,}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ID de País (2 letras mayúsculas) -->
+  <xs:simpleType name="CountryIDType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{2}"/>
+      <xs:length value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ID de Job (formato: AD_PRES, AD_VP, etc.) -->
+  <xs:simpleType name="JobIDType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z_]{2,}"/>
+      <xs:minLength value="2"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Salario (valores positivos con decimales) -->
+  <xs:simpleType name="SalaryType">
+    <xs:restriction base="xs:decimal">
+      <xs:minInclusive value="0.00"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Porcentaje de Comisión (0 a 1 = 0% a 100%) -->
+  <xs:simpleType name="CommissionType">
+    <xs:restriction base="xs:decimal">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="1"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
