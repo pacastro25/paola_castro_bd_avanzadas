@@ -1,3 +1,24 @@
+Consulta XPath 1 — Empleados
+
+doc("/db/commerce/data/hr_employees.xml")/HRDatabase/Employees/Employee
+
+
+Consulta XPath 2 — Nombres de empleados
+doc("/db/commerce/data/hr_employees.xml")/HRDatabase/Employees/Employee/FirstName
+
+
+Consulta XPath 3 — Salario mayor a 10000
+doc("/db/commerce/data/hr_employees.xml")/HRDatabase/Employees/Employee[Salary > 10000]
+
+
+Consulta XPath 4 — Departamentos
+doc("/db/commerce/data/hr_employees.xml")/HRDatabase/Departments/Department/DepartmentName
+
+
+
+
+
+
 Consulta XQuery 1 — Employees + Departments
 
 let $doc := doc("/db/commerce/data/hr_employees.xml")
@@ -36,3 +57,7 @@ return
     <Nombre>{ $e/FirstName/text () }</Nombre>
     <Salario>{ $e/Salary/text () }</Salario>
 </Employeeinfo>
+
+
+
+
